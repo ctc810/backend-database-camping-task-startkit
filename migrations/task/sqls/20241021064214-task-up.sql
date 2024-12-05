@@ -239,7 +239,7 @@
     -- from ( 用戶王小明的購買堂數 ) as "CREDIT_PURCHASE"
     -- inner join ( 用戶王小明的已使用堂數) as "COURSE_BOOKING"
     -- on "COURSE_BOOKING".user_id = "CREDIT_PURCHASE".user_id;
-    select ("CREDIT_PURCHASE".total - "COURSE_BOOKING".total) as remaining_credit
+    select "CREDIT_PURCHASE".user_id,("CREDIT_PURCHASE".total - "COURSE_BOOKING".total) as remaining_credit
     from
     (select "CREDIT_PURCHASE".user_id, sum("CREDIT_PURCHASE".purchased_credits) as total
     from "CREDIT_PURCHASE"
@@ -299,5 +299,5 @@
 -- 顯示須包含以下欄位： 預約會員人數
     select count(distinct "COURSE_BOOKING".user_id) as 預約會員人數
     from "COURSE_BOOKING"
-    where extract(month from "COURSE_BOOKING".booking_at) = 11
-    and "COURSE_BOOKING".status != '課程已取消';
+    where extract(month from "COURSE_BOOKING".created_at) = 11
+    and "COURSE_BOOKING".status != '課程已取消'; 
